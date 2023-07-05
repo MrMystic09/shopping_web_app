@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center">
+    <mat-card class="mb-4 mt-2 w-75">
+        <div class="d-flex justify-content-between">
+            <div>
+                <button mat-button [mat-menu-trigger-for]="sortMenu">
+                    Sort by {{sort}}
+                    <mat-icon>expand_more</mat-icon>
+                </button>
+                <mat-menu #sortMenu="matMenu">
+                    <button (click)="onSortUpdated('descending')" mat-menu-item>descending</button>
+                    <button (click)="onSortUpdated('ascending')" mat-menu-item>ascending</button>
+                </mat-menu>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="d-none d-lg-block d-flex justify-content-center ">  <!--  <---   -->
+                    <button mat-button (click)="onColumnsUpdated(1)">
+                        <mat-icon>view_list</mat-icon>
+                    </button>
+                    <button mat-button (click)="onColumnsUpdated(3)">
+                        <mat-icon>view_module</mat-icon>
+                    </button>
+                    <button mat-button (click)="onColumnsUpdated(4)">
+                        <mat-icon>view_comfy</mat-icon>
+                    </button>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div>
+                        <div class="form-inline my-2 my-lg-0 d-none d-lg-block">
+                            <input class="form-control mr-sm" type="text" [(ngModel)]="searchTerm" (input)="searchProducts()" placeholder="Search"
+                                aria-label="Search">
+                            <button class="btn btn-success rounded-10 my-sm-0" type="submit">Search</button>
+                        </div><!-- for screen > 992px-->
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </mat-card>

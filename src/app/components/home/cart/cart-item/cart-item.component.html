@@ -1,0 +1,31 @@
+<div class="flex-roww col-6 justify-content-between my-2 bg-xlight-gray rounded-10">
+  <div class="col-2">
+    <span>
+      <img [src]="cart.picture" alt="" class="img-responsive width-100">
+    </span>
+  </div>
+  <div class="col-5 d-flex align-items-center">
+    <h3>{{ cart.name }}</h3>
+  </div>
+  <div class="col-1 d-flex align-items-center">{{ cart.price }}</div>
+  <div class="col-1 flex-roww align-items-center">
+    <button mat-icon-button (click)="addCartItem()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div>{{ cart.quantity }}</div>
+    <button mat-icon-button (click)="removeCartItem()">
+      <mat-icon>remove</mat-icon>
+    </button>
+  </div>
+  <div class="col-1 flex-roww align-items-center justify-content-center">
+    {{cart.totalProductPrice}}
+  </div>
+
+  <div class="col-1 d-flex align-items-center">
+    <div class="w-50 d-flex justify-content-center">
+      <button class="bg-red t-color-white" mat-icon-button (click)="deleteCartItem()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

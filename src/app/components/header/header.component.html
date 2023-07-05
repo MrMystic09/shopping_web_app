@@ -1,0 +1,104 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="home">Shopping Web App</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+<!-- 
+    <button class="mx-1 rounded-10" (click)="onLoadProducts()">Get products</button>
+    <button class="mx-1 rounded-10" (click)="onSaveProducts()">Set products</button> -->
+    <!-- "auth != null" -->
+
+    <div class="collapse navbar-collapse flex" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto justify-content-between">
+
+
+            
+
+            <div class="flex-roww my-2 d-lg-none">
+                <input class="form-control mr-sm-2 flex-grow-i" type="text" [(ngModel)]="searchTerm" (input)="searchProducts()" placeholder="Search"
+                    aria-label="Search">
+                <button class="btn btn-success rounded-10 my-sm-0" type="submit">Search</button>
+            </div><!-- for screen < 992px-->
+
+            <button class="mx-1 d-none d-lg-block" mat-icon-button routerLink="admin" *ngIf="loggedIn && _authService.getAdmin()">A</button>  <!-- for screen > 992px-->
+            <button class="p-2 my-1 d-lg-none rounded-10" routerLink="admin" *ngIf="loggedIn && UserEmail == 'koada.eduard@gmail.com'">A</button>  <!-- for screen < 992px-->
+
+            <button [class.c-red]="_favouriteService.getFavourites().length >= 1" mat-icon-button class="mx-1 d-none d-lg-block" routerLink="favourites">
+                <mat-icon>favorite</mat-icon>
+            </button> <!-- for screen > 992px-->
+            <button class="p-2 my-1 d-lg-none rounded-10" [class.c-red]="_favouriteService.getFavourites().length >= 1" routerLink="favourites">Favourites</button>
+            <!-- for screen < 992px-->
+
+            <button mat-icon-button class="mx-1 d-none d-lg-block" [mat-menu-trigger-for]="cartMenu">
+                <mat-icon [matBadge]="_cartService.getCartProducts().length" matBadgeColor="warn">shopping_cart
+                </mat-icon>
+            </button> <!-- for screen > 992px-->
+
+            <button class="p-2 my-1 d-lg-none rounded-10" routerLink="cart" [matBadge]="_cartService.getCartProducts().length"
+                matBadgeColor="warn">Cart</button> <!-- for screen < 992px-->
+
+
+
+            <mat-menu #cartMenu="matMenu">
+                <div class="p-4">
+                    <div class="pb-1 d-flex justify-content-between">
+                        <span class="mr-4">{{_cartService.getCartProducts().length}} items</span>
+                        <a routerLink="cart">View cart</a>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="d-flex justify-content-between mb-2" *ngFor="let cartEl of cartProducts let i = index">
+                        <app-minimal-cart-item [cart]="cartEl" [index]="i"></app-minimal-cart-item>
+                    </div>
+                    <div class="mt-1 dropdown-divider"></div>
+                    <div class="py-2 d-flex justify-content-between">
+                        Total:
+                        <span class="font-weight-bold">{{_cartService.getTotalPrice()}}{{ '' | currency }}</span>
+                    </div>
+                    <div class="py-2 d-flex justify-content-between">
+                        <button mat-icon-button class="btn-danger">
+                            <mat-icon>remove_shopping_cart</mat-icon>
+                        </button>
+                        <button routerLink="cart" mat-icon-button class="btn-success">
+                            <mat-icon>shopping_cart</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-menu>
+
+            <li class="nav-item mx-lg-1" *ngIf="!loggedIn && router.url != '/auth'">
+                <a class="p-2 nav-link btn-success rounded-10 text-center" (click)="onLogIn()"
+                    style="color: white;">Log in</a>
+            </li>       <!-- for all screen-->
+
+            <li class="nav-item mx-lg-1 d-none d-lg-block" *ngIf="loggedIn">
+                <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+                    <span>{{UserEmail}}</span>
+                </div>
+            </li>       <!-- for screen > 992px-->
+            <li class="nav-item mx-lg-1 d-none d-lg-block" *ngIf="loggedIn">
+                <a class="p-2 nav-link btn-success rounded-10 text-center" (click)="onLogOut()"
+                    style="color: white;">Log out</a>
+            </li>       <!-- for screen > 992px-->
+
+
+            <div class="row d-lg-none" *ngIf="loggedIn">
+                <div class="col-2"></div>
+                <div class="col-8 d-flex align-items-center justify-content-center">
+                    <span>{{UserEmail}}</span>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                    <li class="nav-item">
+                        <a class="p-2 nav-link btn-success rounded-10 text-center" (click)="onLogOut()"
+                            style="color: white; width: 80px;">Log out</a>
+                    </li>
+                </div>
+            </div>      <!-- for screen < 992px-->
+
+        </ul>
+
+
+    </div>
+</nav>

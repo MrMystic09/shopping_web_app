@@ -1,0 +1,30 @@
+<div class="h-100">
+    <div class="pt-3 flex-roww height-800">
+        <div class="col-5 d-flex justify-content-center">
+            <img [src]="product.picture" alt="" class="img-responsive width-500">
+        </div>
+        <div class="col-7">
+            <div class="my-5 h-50">
+                <h1>{{product.name}}</h1>
+            </div>
+            <div class="my-4 h-50">
+                <h1>Description</h1>
+                <p style="font-size:xx-large;">{{product.description}}</p>
+                <div class="w-100 d-flex justify-content-around">
+                    <button mat-button (click)="onAddToFavourites()">
+                        <mat-icon>favorite</mat-icon>
+                    </button>
+                    <button mat-button (click)="onAddToCart()">
+                        <mat-icon>shopping_cart</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="w-50 d-flex justify-content-center">
+
+            </div>
+            <div class="w-50 d-flex justify-content-center">
+
+            </div>
+        </div>
+    </div>
+</div>

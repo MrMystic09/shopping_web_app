@@ -1,0 +1,27 @@
+
+<a (click)="onOpenProduct()">
+  <div class="width-350 d-flex justify-content-center">
+    <span>
+      <img [src]="product.picture" alt="" class="img-responsive">
+    </span>
+  </div>
+  <div class="width-350">
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.shortDescription }}</p>
+  </div>
+</a>
+  <div class="width-350 flex-roww">
+    <div class="w-50 align-items-start">{{ product.price }}</div>
+    <div class="w-50 flex-roww">
+      <div class="w-50 d-flex justify-content-center">
+        <button mat-icon-button [class.c-red]="0" (click)="onAddToFavourites()">
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
+      <div  class="w-50 d-flex justify-content-center">
+        <button mat-icon-button [class.c-green]="0" (click)="onAddToCart()">
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>

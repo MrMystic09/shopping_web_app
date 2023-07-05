@@ -1,0 +1,32 @@
+<div class="flex-roww justify-content-center">
+    <div class="col-12">
+        <div class="flex-roww  justify-content-between">
+            <div class="col-3 t-ellipsis border bg-light">
+                <p>{{product.name}}</p>   
+            </div>
+            <div class="col-3 t-ellipsis border bg-light">
+                <p>{{product.description}}</p>
+            </div>
+            <div class="col-3 t-ellipsis border bg-light">
+                <p>{{product.shortDescription}}</p>
+            </div>
+            <div class="col-1 border bg-light">
+                <p>{{product.price}}</p>
+            </div>
+            <div class="col-1 px-1 border bg-light">
+                <span>
+                    <img [src]="product.picture" alt="" class="img-responsive width-50">
+                </span>
+            </div>
+            <div class="col-1 px-0 flex-columnn border bg-light">
+                <button mat-button (click)="onEditProduct()">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-button (click)="onDeleteProduct()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

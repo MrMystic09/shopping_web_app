@@ -1,0 +1,10 @@
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="col-12 my-2">
+            <button class="rounded-10" routerLink="add">Add Product</button>
+        </div>
+        <app-product-item *ngFor="let productEl of products let i = index"
+        [product]="productEl"
+        [index] ="i"></app-product-item>
+    </div>
+</div>

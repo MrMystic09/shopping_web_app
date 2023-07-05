@@ -1,0 +1,28 @@
+<div class="h-100" >
+    <div *ngIf="cartLength >= 1">
+        <app-cart-item class="my-3 d-flex justify-content-center" *ngFor="let cartEl of cartProducts let i = index"
+            [cart]="cartEl" [index]="i"></app-cart-item>
+        <div style="height: 3px; background-color: rgb(71, 71, 71); width: 80%; margin-left: 10%; margin-right: 10%;">
+        </div>
+        <div class="my-5 flex-roww justify-content-around">
+
+            <div>
+                <p>Total:</p>
+            </div>
+            <div>{{_cartService.getTotalPrice()}}</div>
+
+        </div>
+
+    </div>
+
+
+    <div class="h-100 align-items-center justify-content-center flex-columnn" *ngIf="cartLength == 0">
+        <div class="d-flex justify-content-center">
+            <h1>Cart is Empty!</h1>
+        </div>
+        <div class="mt-3 d-flex justify-content-center">
+            <button type="button" class="px-3 rounded-10 btn-success" style="font-size: 2rem;"
+                (click)="toProductList()">Go to shopping</button>
+        </div>
+    </div>
+</div>

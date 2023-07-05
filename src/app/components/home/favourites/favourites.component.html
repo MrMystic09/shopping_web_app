@@ -1,0 +1,25 @@
+<mat-drawer-container [autosize]="true" class="mh-100">
+    <mat-drawer-content>
+        <app-filter-header></app-filter-header>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+<mat-grid-list cols={{cols}} rowHeight="650px" *ngIf="_favouritesService.getFavourites().length > 0">
+    <ng-container *ngFor="let favouriteEl of favouriteProducts let i = index">
+        <mat-grid-tile>
+            <mat-card>
+                <app-favourite-item [favourite]="favouriteEl" [index]="i"></app-favourite-item>
+            </mat-card>
+        </mat-grid-tile>
+    </ng-container>
+</mat-grid-list>
+
+
+<div class="h-100 align-items-center justify-content-center flex-columnn" *ngIf="_favouritesService.getFavourites().length === 0">
+    <div class="d-flex justify-content-center">
+        <h1>Favourite is Empty!</h1>
+    </div>
+    <div class="mt-3 d-flex justify-content-center">
+        <button type="button" class="px-3 rounded-10 btn-success" style="font-size: 2rem;" (click)="toProductList()">Go to shopping</button>
+    </div>
+</div>

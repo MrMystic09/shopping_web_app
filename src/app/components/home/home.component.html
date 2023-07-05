@@ -1,0 +1,33 @@
+<mat-drawer-container [autosize]="true" class="mh-100">
+    <mat-drawer-content>
+        <!-- <app-filter-header (columnsCountChange)="onColumnsCountChange($event)"></app-filter-header> -->
+        <app-filter-header></app-filter-header>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+
+
+
+
+<mat-grid-list class="d-lg-none" cols="1" rowHeight="650px" *ngIf="router.url === '/home'">
+    <ng-container *ngFor="let productEl of products let i = index">
+        <mat-grid-tile>
+            <mat-card>
+                <app-product-box [product]="productEl" [index]="i"></app-product-box>
+            </mat-card>
+        </mat-grid-tile>
+    </ng-container>
+</mat-grid-list>
+
+<mat-grid-list class="d-none d-lg-block" cols={{cols}} rowHeight="650px" *ngIf="router.url === '/home'">
+    <ng-container *ngFor="let productEl of products let i = index">
+        <mat-grid-tile>
+            <mat-card>
+                <app-product-box [product]="productEl" [index]="i"></app-product-box>
+            </mat-card>
+        </mat-grid-tile>
+    </ng-container>
+</mat-grid-list>
+
+
+<router-outlet></router-outlet>
