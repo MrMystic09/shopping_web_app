@@ -54,6 +54,7 @@ export class CartService {
   removeItem(cart: Cart) {
     if (cart.quantity >= 2) {
       cart.quantity -= this.productQuantity;
+      this.cartProductsChanged.next(this.cartProducts.slice());
       cart.totalProductPrice -= cart.price;
       this.setTotalPrice();
     }
