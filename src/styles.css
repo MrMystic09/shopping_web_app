@@ -29,6 +29,9 @@ body { margin: 0; font-family: 'Roboto Mono', monospace; }
 .t-clip {
     text-overflow: clip;
 }
+.overflow-scroll {
+    overflow: scroll !important;
+}
 
 .word-wrap {
     word-wrap: break-word;
