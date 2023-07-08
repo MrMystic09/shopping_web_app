@@ -5,6 +5,7 @@ import { Product } from 'src/app/models/product.model';
 import { StoreService } from 'src/app/services/store.service';
 import { FavouritesService } from '../../home/favourites/favourites.service';
 import { CartService } from '../../home/cart/cart.service';
+import { AuthService } from '../../authorization/auth.service';
 
 @Component({
   selector: 'app-product-details',
@@ -17,6 +18,7 @@ export class ProductDetailsComponent implements OnInit {
     private _storeService: StoreService,
     private _favouritesService: FavouritesService,
     private _cartService: CartService,
+    private _authService: AuthService,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -30,11 +32,13 @@ export class ProductDetailsComponent implements OnInit {
       );
   }
   onAddToCart() {
-    this._cartService.addToCart(this.product, this.id);
+    const userId = this._authService.getUserId();
+    this._cartService.addToCart(this.product, this.id, userId);
   }
 
 
   onAddToFavourites() {
-    this._favouritesService.addToFavourites(this.product, this.id);
+    const userId = this._authService.getUserId();
+    this._favouritesService.addToFavourites(this.product, this.id, userId);
   }
 }

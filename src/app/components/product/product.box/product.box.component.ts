@@ -7,6 +7,7 @@ import { FavouritesService } from '../../home/favourites/favourites.service';
 import { CartService } from '../../home/cart/cart.service';
 import { Subscription } from 'rxjs';
 import { Cart } from 'src/app/models/cart.mocel';
+import { AuthService } from '../../authorization/auth.service';
 
 @Component({
   selector: 'app-product-box',
@@ -23,6 +24,7 @@ export class ProductBoxComponent implements OnInit {
   constructor(private _storeService: StoreService,
     private _favouritesService: FavouritesService,
     private _cartService: CartService,
+    private _authService: AuthService,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -49,12 +51,14 @@ onOpenProduct() {
  }
 
 onAddToCart() {
-  this._cartService.addToCart(this.product, this.index);
+  const userId = this._authService.getUserId();
+  this._cartService.addToCart(this.product, this.index, userId);
 }
 
 
 onAddToFavourites() {
-  this._favouritesService.addToFavourites(this.product, this.index);
+  const userId = this._authService.getUserId();
+  this._favouritesService.addToFavourites(this.product, this.index, userId);
 }
 
 }

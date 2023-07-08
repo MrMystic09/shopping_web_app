@@ -7,6 +7,7 @@ import { StoreService } from 'src/app/services/store.service';
 import { FavouritesService } from '../favourites/favourites.service';
 import { CartService } from './cart.service';
 import { Cart } from 'src/app/models/cart.mocel';
+import { AuthService } from '../../authorization/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -20,10 +21,15 @@ export class CartComponent implements OnInit {
   constructor(private _storeService: StoreService,
               private _favouritesService: FavouritesService,
               public _cartService: CartService,
+              private _authService: AuthService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    const userId = this._authService.getUserId();
+    this._cartService.loadCartProducts(userId);
+    this.cartProducts = this._cartService.getCartProducts();
+
     this.subscription = this._cartService.cartProductsChanged
       .subscribe(( cartProducts: Cart[]) => {
         this.cartProducts = cartProducts;
@@ -31,7 +37,6 @@ export class CartComponent implements OnInit {
         console.log('lenth2 - ',this.cartLength);
       })
 
-    this.cartProducts = this._cartService.getCartProducts();
     this.cartLength = this.cartProducts.length;
     console.log(this.cartProducts);
     console.log('lenth - ',this.cartLength);

@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { plainToClass } from 'class-transformer';
 import { Subject } from 'rxjs';
@@ -35,16 +36,19 @@ export class CartService {
     return cartItem;
   }
 
-  addToCart(product: Product, index: number) {
+  addToCart(product: Product, index: number, userId: string) {
     if (!this.isProductInCart(product, index)) {
       this.cartProducts.push(this.convertProductToCart(product, this.productQuantity, index, product.price));
       this.setTotalPrice();
+      this.cartProductsChanged.next(this.cartProducts.slice());
+      this.saveCartProducts(userId);
       console.log('log is - ', this.convertProductToCart(product, this.productQuantity, index, product.price));
     } else {
       console.log('Product is alredy in the cart!')
 
     }
   }
+
   addItem(cart: Cart) {
     cart.quantity += this.productQuantity;
     this.cartProductsChanged.next(this.cartProducts.slice());
@@ -85,9 +89,10 @@ export class CartService {
     return Number(this.totalCartPrice);
   }
 
-  deleteCartProduct(id: number) {
+  deleteCartProduct(id: number, userId: string) {
     this.cartProducts.splice(id, 1);
     this.cartProductsChanged.next(this.cartProducts.slice());
+    this.saveCartProducts(userId);
     this.setTotalPrice();
   }
 
@@ -106,4 +111,16 @@ export class CartService {
     return this.cartProducts.some(item => item.productId === cartItem.productId);
   }
 
+
+  saveCartProducts(userId: string) {
+    localStorage.setItem(`cartProducts_${userId}`, JSON.stringify(this.cartProducts));
+  }
+  loadCartProducts(userId: string) {
+    const cartProducts = localStorage.getItem(`cartProducts_${userId}`);
+    if (cartProducts) {
+      this.cartProducts = JSON.parse(cartProducts);
+    } else {
+      this.cartProducts = [];
+    }
+  }
 }

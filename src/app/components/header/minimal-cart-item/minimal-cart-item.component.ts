@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Cart } from 'src/app/models/cart.mocel';
 import { CartService } from '../../home/cart/cart.service';
+import { AuthService } from '../../authorization/auth.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class MinimalCartItemComponent implements OnInit {
   @Input() index: number;
   // @Input() totalProductPrice: number;
   constructor(private _cartService: CartService,
+    private _authService: AuthService,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -28,7 +30,8 @@ removeCartItem() {
   this._cartService.removeItem(this.cart);
 }
 deleteCartItem() {
-  this._cartService.deleteCartProduct(this.index);
+  const userId = this._authService.getUserId();
+  this._cartService.deleteCartProduct(this.index, userId);
 }
 
 }

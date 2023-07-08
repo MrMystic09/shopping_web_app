@@ -7,6 +7,7 @@ import { StoreService } from 'src/app/services/store.service';
 import { CartService } from '../../cart/cart.service';
 import { FavouritesService } from '../favourites.service';
 import { Cart } from 'src/app/models/cart.mocel';
+import { AuthService } from 'src/app/components/authorization/auth.service';
 
 @Component({
   selector: 'app-favourite-item',
@@ -20,6 +21,7 @@ export class FavouriteItemComponent implements OnInit {
   constructor(private _storeService: StoreService,
     private _cartService: CartService,
     private _favouritesService: FavouritesService,
+    private _authService: AuthService,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -30,6 +32,7 @@ onAddToCart() {
 }
 
 onDeleteFavourite() {
-  this._favouritesService.deleteFavourite(this.index);
+  const userId = this._authService.getUserId();
+  this._favouritesService.deleteFavourite(this.index, userId);
 }
 }

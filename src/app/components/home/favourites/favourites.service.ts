@@ -33,10 +33,11 @@ export class FavouritesService {
     return favItem;
   }
   
-  addToFavourites(product: Product, index: number): void {
-    console.log('boolean - ',this.isProductInFavorites(this.convertProductToFav(product, this.productQuantity, index, product.price)))
+  addToFavourites(product: Product, index: number, userId: string): void {
     if (!this.isProductInFavorites(this.convertProductToFav(product, this.productQuantity, index, product.price))) {
       this.favouriteProducts.push(this.convertProductToFav(product, this.productQuantity, index, product.price));
+      this.favouriteProductsChanged.next(this.favouriteProducts.slice());
+      this.saveFavouritesProducts(userId);
     } else {
     }
   }
@@ -58,8 +59,21 @@ export class FavouritesService {
     return this.favouriteProducts;
   }
 
-  deleteFavourite(id: number) {
+  deleteFavourite(id: number, userId: string) {
     this.favouriteProducts.splice(id, 1);
     this.favouriteProductsChanged.next(this.favouriteProducts.slice());
+    this.saveFavouritesProducts(userId);
+  }
+
+  saveFavouritesProducts(userId: string) {
+    localStorage.setItem(`favouriteProducts_${userId}`, JSON.stringify(this.favouriteProducts));
+  }
+  loadFavouritesProducts(userId: string) {
+    const favouriteProducts = localStorage.getItem(`favouriteProducts_${userId}`);
+    if (favouriteProducts) {
+      this.favouriteProducts = JSON.parse(favouriteProducts);
+    } else {
+      this.favouriteProducts = [];
+    }
   }
 }

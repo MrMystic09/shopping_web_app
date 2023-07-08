@@ -38,27 +38,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.loggedIn = !!user;
       this.UserEmail = user.email;
       console.log(user);
-      console.log(!user);
-      console.log(!!user);
     });
 
     this.cartProducts = this._cartService.getCartProducts();
+    
 
 
   }
 
 
-  onLogIn(): void {
+  onLogIn() {
     this.router.navigate(['/auth'])
   }
-  onLogOut(): void {
+  onLogOut() {
+
     this._authService.logout();
+
   }
 
   searchProducts() {
     this._storeService.serch(this.searchTerm);
     console.log(this.searchTerm);
   }
+
 
   ngOnDestroy() {
     this.userSub.unsubscribe();

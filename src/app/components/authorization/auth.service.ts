@@ -4,6 +4,9 @@ import { BehaviorSubject, Subject, catchError, tap } from 'rxjs';
 import { throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import { Cart } from 'src/app/models/cart.mocel';
+import { CartService } from '../home/cart/cart.service';
+import { FavouritesService } from '../home/favourites/favourites.service';
 
 
 export interface AuthResponseData {
@@ -14,6 +17,8 @@ export interface AuthResponseData {
   expiresIn: string;	      // The number of seconds in which the ID token expires.
   localId: string;	        // The uid of the newly created user.
   registered?: boolean;
+  cart: Cart[];
+  favourites: Cart[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +30,14 @@ export class AuthService {
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
-  private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private _cartService: CartService,
+    private _favouritesService: FavouritesService
+  ) { }
+
+  private handleAuthentication(email: string, userId: string, token: string, expiresIn: number, cart: Cart[], favourites: Cart[]) {
     const expirationDate = new Date(
       new Date().getTime() + expiresIn * 1000
     );
@@ -33,7 +45,9 @@ export class AuthService {
       email,
       userId,
       token,
-      expirationDate
+      expirationDate,
+      cart,
+      favourites
     );
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
@@ -68,13 +82,6 @@ export class AuthService {
   }
 
 
-
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) { }
-
-
   signUp(email: string, password: string) {
     return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAsAsiqy-taZG-9KeTnFdm17KS-Lwq-4FI',
       {
@@ -87,8 +94,12 @@ export class AuthService {
             resData.email,
             resData.localId,
             resData.idToken,
-            +resData.expiresIn
+            +resData.expiresIn,
+            [],
+            []
           );
+          this._cartService.saveCartProducts(resData.localId);
+          this._favouritesService.saveFavouritesProducts(resData.localId);
         }));
   }
 
@@ -100,12 +111,19 @@ export class AuthService {
         returnSecureToken: true
       }).pipe(catchError(this.hadleError),
         tap(resData => {
+          const userData = JSON.parse(localStorage.getItem('userData'));
+          const cart = userData ? userData.cart:[];
+          const favourites = userData ? userData.favourites:[];
           this.handleAuthentication(
             resData.email,
             resData.localId,
             resData.idToken,
-            +resData.expiresIn
+            +resData.expiresIn,
+            cart,
+            favourites
           );
+          this._cartService.loadCartProducts(resData.localId);
+          this._favouritesService.loadFavouritesProducts(resData.localId);
         })
       );
   }
@@ -115,6 +133,8 @@ export class AuthService {
       id: string;
       _token: string;
       _tokenExpirationDate: string;
+      cart: Cart[];
+      favourites: Cart[];
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {
       return;
@@ -123,11 +143,15 @@ export class AuthService {
       userData.email,
       userData.id,
       userData._token,
-      new Date(userData._tokenExpirationDate)
+      new Date(userData._tokenExpirationDate),
+      userData.cart,
+      userData.favourites
     );
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
+      this._cartService.loadCartProducts(loadedUser.id);
+      this._favouritesService.loadFavouritesProducts(loadedUser.id);
       const expirationDuration = new Date(userData._tokenExpirationDate).getTime()-new Date().getTime();
       this.autoLogout(expirationDuration);
     }
@@ -157,8 +181,38 @@ export class AuthService {
   }
 
 
+  updateCartProducts(products: Cart[]) {
+    const user = this.user.value;
+    user.cart = products;
+    this.user.next(user);
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData) {
+      userData.cart = products;
+      localStorage.setItem('userData', JSON.stringify(userData));
+    }
+  }
+  updateFavouritesProducts(products: Cart[]) {
+    const user = this.user.value;
+    user.favourites = products;
+    this.user.next(user);
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData) {
+      userData.favourites = products;
+      localStorage.setItem('userData', JSON.stringify(userData));
+    }
+  }
+
+  getUserId() {
+    const userData: {
+      email: string,
+      id: string,
+      token: string,
+      tokenExpirationDate: string
+    } = JSON.parse(localStorage.getItem('userData'))
+    return userData ? userData.id : null
+  }
+
   getValue(): User | null {
-    // Возвращаем текущее значение пользователя
     let userValue: User | null = null;
     this.user.subscribe(value => userValue = value).unsubscribe();
     return userValue;

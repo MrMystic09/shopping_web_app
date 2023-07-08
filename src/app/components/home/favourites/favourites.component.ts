@@ -6,6 +6,7 @@ import { Product } from 'src/app/models/product.model';
 import { StoreService } from 'src/app/services/store.service';
 import { FavouritesService } from './favourites.service';
 import { Cart } from 'src/app/models/cart.mocel';
+import { AuthService } from '../../authorization/auth.service';
 
 @Component({
   selector: 'app-favourites',
@@ -20,16 +21,19 @@ export class FavouritesComponent implements OnInit {
 
   constructor(private _storeService: StoreService,
               public _favouritesService: FavouritesService,
+              private _authService: AuthService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    const userId = this._authService.getUserId();
+    this._favouritesService.loadFavouritesProducts(userId);
+    this.favouriteProducts = this._favouritesService.getFavourites();
+
     this.subscription = this._favouritesService.favouriteProductsChanged
       .subscribe(( favouriteProducts: Cart[]) => {
         this.favouriteProducts =  favouriteProducts;
       })
-
-    this.favouriteProducts = this._favouritesService.getFavourites();
 
     this._storeService.getCols().subscribe((newCols) => {
       this.cols = newCols;
