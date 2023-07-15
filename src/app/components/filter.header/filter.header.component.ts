@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
@@ -33,6 +33,5 @@ export class FilterHeaderComponent implements OnInit {
 
   searchProducts() {
     this._storeService.serch(this.searchTerm);
-    console.log(this.searchTerm);
   }
 }

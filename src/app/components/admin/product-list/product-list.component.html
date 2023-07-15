@@ -1,8 +1,14 @@
 <div class="row justify-content-center">
     <div class="col-10">
-        <div class="col-12 my-2">
-            <button class="rounded-10" routerLink="add">Add Product</button>
+        <div class="flex-roww">
+            <div class="my-3 mx-1 pl-2">
+                <button class="rounded-10" routerLink="add">Add Product</button>
+            </div>
+            <div class="my-3 mx-1">
+                <button class="rounded-10" routerLink="orders">Order List</button>
+            </div>
         </div>
+
         <app-product-item *ngFor="let productEl of products let i = index"
         [product]="productEl"
         [index] ="i"></app-product-item>

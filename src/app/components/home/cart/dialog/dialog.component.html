@@ -1,0 +1,6 @@
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <input class="form-control w-100 my-2" type="text" placeholder="Name" formControlName="name" required minlength="2">
+    <input class="form-control w-100 my-2" type="text" placeholder="Surname" formControlName="surname" required minlength="4">
+    <input class="form-control w-100 my-2" type="text" placeholder="Phone" formControlName="phone" required minlength="11">
+    <button class="btn btn-success rounded-10 my-2" type="submit" [disabled]="!orderForm.valid">Send</button>
+</form>

@@ -1,4 +1,4 @@
-<div class="h-100" >
+<div class="">
     <div *ngIf="cartLength >= 1">
         <app-cart-item class="my-3 d-flex justify-content-center" *ngFor="let cartEl of cartProducts let i = index"
             [cart]="cartEl" [index]="i"></app-cart-item>
@@ -6,13 +6,17 @@
         </div>
         <div class="my-5 flex-roww justify-content-around">
 
-            <div>
-                <p>Total:</p>
+            <div class="d-flex align-items-center">
+                <p class="m-0">Total:</p>
             </div>
-            <div>{{_cartService.getTotalPrice()}}</div>
+            <div class="flex-roww">
+                <div class="d-flex align-items-center mr-3">
+                    <p class="m-0">{{_cartService.getTotalPrice() | currency}}</p>
+                </div>
+                <div><button class="btn btn-success rounded-10" (click)="onOpenDialog()">Checkout</button></div>
+            </div>
 
         </div>
-
     </div>
 
 

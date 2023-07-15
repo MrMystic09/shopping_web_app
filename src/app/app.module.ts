@@ -20,7 +20,7 @@ import { MatTableModule } from '@angular/material/table'
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -43,6 +43,11 @@ import { CartItemComponent } from './components/home/cart/cart-item/cart-item.co
 import { CartComponent } from './components/home/cart/cart.component';
 import { MinimalCartItemComponent } from './components/header/minimal-cart-item/minimal-cart-item.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component'
+import { OrderComponent } from './components/admin/order/order.component';
+import { OrderItemComponent } from './components/admin/order/order-item/order-item.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DialogComponent } from './components/home/cart/dialog/dialog.component';
+
 
 
 
@@ -70,7 +75,10 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     CartComponent,
     CartItemComponent,
     MinimalCartItemComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    OrderComponent,
+    OrderItemComponent,
+    DialogComponent
     
   ],
   imports: [
@@ -93,6 +101,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     MatListModule,
     FormsModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDialogModule
   ],
   providers: [StoreService],
   bootstrap: [AppComponent]

@@ -1,0 +1,6 @@
+<div class="flex-columnn">
+    <div class="col-12">
+        <button class="rounded-10 mx-3 mb-3 mt-1" (click)="back()">Back</button>
+    </div>
+    <app-order-item class="mt-5" *ngFor="let orderEl of order let i = index" [order]="orderEl" [index]="i"></app-order-item>
+</div>

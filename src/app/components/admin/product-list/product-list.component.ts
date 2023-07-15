@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NumberValueAccessor } from '@angular/forms';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Product } from 'src/app/models/product.model';
@@ -15,9 +13,7 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   subscription: Subscription;
 
-  constructor(private _storeService: StoreService, 
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(private _storeService: StoreService) { }
 
   ngOnInit() {
     this.subscription = this._storeService.productChanged

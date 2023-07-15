@@ -1,6 +1,4 @@
-import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { plainToClass } from 'class-transformer';
 import { Subject } from 'rxjs';
 
 
@@ -12,8 +10,7 @@ import { Product } from 'src/app/models/product.model';
 })
 export class CartService {
 
-  private cartProducts: Cart[] = [
-  ];
+  private cartProducts: Cart[] = [];
 
   cartProductsChanged = new Subject<Cart[]>();
   productQuantity: number = 1;
@@ -42,9 +39,7 @@ export class CartService {
       this.setTotalPrice();
       this.cartProductsChanged.next(this.cartProducts.slice());
       this.saveCartProducts(userId);
-      console.log('log is - ', this.convertProductToCart(product, this.productQuantity, index, product.price));
     } else {
-      console.log('Product is alredy in the cart!')
 
     }
   }
@@ -100,9 +95,7 @@ export class CartService {
   addFavToCart(product: Cart): void {
     if (!this.isFavProductInCart(product)) {
       this.cartProducts.push(product);
-      console.log('log is - ', product);
     } else {
-      console.log('Product is alredy in the cart!')
     }
   }
 

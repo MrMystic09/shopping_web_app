@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Product } from 'src/app/models/product.model';
 import { StoreService } from 'src/app/services/store.service';
 import { FavouritesService } from './favourites.service';
 import { Cart } from 'src/app/models/cart.mocel';
@@ -22,8 +21,7 @@ export class FavouritesComponent implements OnInit {
   constructor(private _storeService: StoreService,
               public _favouritesService: FavouritesService,
               private _authService: AuthService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+              private router: Router) { }
 
   ngOnInit() {
     const userId = this._authService.getUserId();

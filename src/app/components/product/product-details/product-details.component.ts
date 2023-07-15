@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { Product } from 'src/app/models/product.model';
 import { StoreService } from 'src/app/services/store.service';
@@ -19,7 +19,6 @@ export class ProductDetailsComponent implements OnInit {
     private _favouritesService: FavouritesService,
     private _cartService: CartService,
     private _authService: AuthService,
-    private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit() {

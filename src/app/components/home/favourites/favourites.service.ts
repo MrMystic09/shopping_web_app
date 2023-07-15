@@ -53,8 +53,6 @@ export class FavouritesService {
     return this.favouriteProducts.some(item => item.productId === favItem.productId);
   }
 
-
-
   getFavourites(): Cart[] {
     return this.favouriteProducts;
   }

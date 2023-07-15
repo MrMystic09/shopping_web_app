@@ -13,7 +13,7 @@ import { AuthService } from '../../authorization/auth.service';
 export class MinimalCartItemComponent implements OnInit {
   @Input() cart: Cart;
   @Input() index: number;
-  // @Input() totalProductPrice: number;
+
   constructor(private _cartService: CartService,
     private _authService: AuthService,
     private router: Router,
@@ -24,7 +24,6 @@ ngOnInit() {
 
 addCartItem() {
  this._cartService.addItem(this.cart);
- console.log('cart item - ', this.cart);
 }
 removeCartItem() {
   this._cartService.removeItem(this.cart);

@@ -1,12 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 import { Product } from 'src/app/models/product.model';
 import { StoreService } from 'src/app/services/store.service';
-import { DataService } from 'src/app/services/data.service';
 
 
 
@@ -25,9 +23,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private _storeService: StoreService,
-    private _dataService: DataService,
-    public router: Router,
-    private route: ActivatedRoute) { }
+    public router: Router) { }
 
   ngOnInit() {
     this.products = this._storeService.getProducts();
@@ -56,12 +52,7 @@ export class HomeComponent implements OnInit {
             this.products = this._storeService.getProducts();
           }
         })
-
-
     );
-
-
-    
 
     this._storeService.getCols().subscribe((newCols) => {
       this.cols = newCols;

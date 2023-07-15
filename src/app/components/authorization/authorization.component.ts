@@ -17,7 +17,9 @@ export class AuthorizationComponent implements OnInit {
   error: string = null;
 
 
-  constructor(private _authService: AuthService, private router: Router) { }
+  constructor(
+    private _authService: AuthService, 
+    private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -48,11 +50,9 @@ export class AuthorizationComponent implements OnInit {
         authObserv = this._authService.signUp(email, password);
       }
       authObserv.subscribe(resData => {
-        console.log(resData);
         this.isLoading = false;
         this.router.navigate(['/home'])
       }, errorMessage => {
-        console.log(errorMessage);
         this.error = errorMessage;
         this.isLoading = false;
       }
@@ -60,10 +60,6 @@ export class AuthorizationComponent implements OnInit {
 
 
     }, 300);
-
-
-
-    console.log(form.value);
     form.reset();
   }
 }

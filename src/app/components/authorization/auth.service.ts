@@ -180,7 +180,6 @@ export class AuthService {
     }, expirationDuration);
   }
 
-
   updateCartProducts(products: Cart[]) {
     const user = this.user.value;
     user.cart = products;

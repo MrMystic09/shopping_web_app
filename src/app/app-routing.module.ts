@@ -12,6 +12,7 @@ import { FavouritesComponent } from './components/home/favourites/favourites.com
 import { AuthorizationComponent } from './components/authorization/authorization.component';
 import { ProductResolverService } from './services/product-resolver.service';
 import { AuthGuard } from './components/authorization/auth-guard.guard';
+import { OrderComponent } from './components/admin/order/order.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
 
     children: [
       {path: '', component: ProductListComponent},
+      {path: 'orders', component: OrderComponent},
       {path: 'add', component: EditComponent},
       // {path: ':id', component: EditComponent},
       {path: ':id/edit', component: EditComponent, resolve: [ProductResolverService]}
